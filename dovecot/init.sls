@@ -28,17 +28,18 @@ dovecot_packages:
       - pkg: dovecot_packages
 {% endfor %}
 
-{% for name, content in dovecot.config.conf.items() %}
-/etc/dovecot/conf.d/{{ name }}.conf:
-  file.managed:
-    - contents: |
-        {{ content | indent(8) }}
+/etc/dovecot/conf.d:
+  file.recurse:
+    - source: salt://dovecot/files/conf.d
+    - user: root
+    - group: dovecot
+    - file_mode: 640
+    - template: jinja
     - backup: minion
     - watch_in:
       - service: dovecot_service
     - require:
       - pkg: dovecot_packages
-{% endfor %}
 
 {% for name, content in dovecot.config.confext.items() %}
 /etc/dovecot/conf.d/{{ name }}.conf.ext:
