@@ -1,15 +1,15 @@
 {%- macro get_config(configname, default_value) -%}
-{%- if configname in cfg -%}
+{%-   if configname in cfg -%}
 {{ configname }}: {{ cfg[configname] }}
-{%- else -%}
+{%-   else -%}
 #{{ configname }}: {{ default_value }}
-{%- enfif -%}
+{%-   endif -%}
 {%- endmacro -%}
 {%- macro set_config(configname, default_value) -%}
-{%- if configname in cfg -%}
+{%-   if configname in cfg -%}
 {{ configname }}: {{ cfg[configname] }}
-{%- else -%}
+{%-   else -%}
 {{ configname }}: {{ default_value }}
-{%- enfif -%}
+{%-   endif -%}
 {%- endmacro -%}
 
