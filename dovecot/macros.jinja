@@ -4,12 +4,12 @@
 {%- else -%}
 #{{ configname }}: {{ default_value }}
 {%- enfif -%}
+{%- endmacro -%}
 {%- macro set_config(configname, default_value) -%}
 {%- if configname in cfg -%}
 {{ configname }}: {{ cfg[configname] }}
 {%- else -%}
 {{ configname }}: {{ default_value }}
 {%- enfif -%}
-{%- endmacro -%}
 {%- endmacro -%}
 
