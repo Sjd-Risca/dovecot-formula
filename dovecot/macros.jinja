@@ -19,9 +19,9 @@
 {%- macro namespace(name, key) -%}
 {%- set cfg_nm = cfg.get(key, {}) -%}
 namespace {{ name }} {
-{%- if cfg_nm.get(name, {}) -%}
+{%- if cfg_nm.get(name, {}) is iterable and cfg_nm.get(name, {}) is not mapping -%}
 {%- for key, value in cfg_nm[name].iteritems() -%}
-    {%- if value is iterable -%}
+    {%- if value is not mapping and value is iterable -%}
   {{ key }} {
         {%- for subkey, subvalue in value -%}
     {{ subkey }} = {{ subvalue }}
