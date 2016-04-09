@@ -1,3 +1,4 @@
+{% set cfg = pillar.get('dovecot:config', {}) -%}
 {%- macro get_config(configname, default_value) -%}
     {%- if configname in cfg -%}
 {{ configname }}: {{ cfg[configname] }}
