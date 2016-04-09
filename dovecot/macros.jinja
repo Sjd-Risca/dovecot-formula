@@ -8,7 +8,7 @@
 {%- endmacro -%}
 
 {%- macro to_include(auth_service) -%}
-    {%- if cfg[auth_service] is defined and cfg[auth_service] is true -%}
+    {%- if cfg[auth_service] is defined and cfg[auth_service] == true -%}
 !include {{ auth_service }}.conf.ext
     {%- else -%}
 #!include {{ auth_service }}.conf.ext
