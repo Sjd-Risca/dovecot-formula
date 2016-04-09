@@ -1,17 +1,8 @@
 {% set cfg = pillar.get('dovecot:config', {}) -%}
-{%- macro get_config(configname, default_value) -%}
+{%- macro get_config(configname, default_value, state='#') -%}
     {%- if configname in cfg -%}
-{{ configname }}: {{ cfg[configname] }}
+{{ configname }} = {{ cfg[configname] }}
     {%- else -%}
-#{{ configname }}: {{ default_value }}
+{{ state }}{{ configname }} = {{ default_value }}
     {%- endif -%}
 {%- endmacro -%}
-
-{%- macro set_config(configname, default_value) -%}
-    {%- if configname in cfg -%}
-{{ configname }}: {{ cfg[configname] }}
-    {%- else -%}
-{{ configname }}: {{ default_value }}
-    {%- endif -%}
-{%- endmacro -%}
-
