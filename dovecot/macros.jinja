@@ -17,6 +17,7 @@
 
 {%- macro namespace(name, key) -%}
 namespace {{ name }} {
+{%- if cfgi.get(key:name, []) -%}
 {%- for key, value in cfg[key][name].iteritems() -%}
     {%- if value is iterable -%}
   {{ key }} {
@@ -28,5 +29,8 @@ namespace {{ name }} {
   {{ key }} = {{ value }}
    {%- endif -%}
 {%- endfor -%}
+{%- else -%}
+    #WARNING: variable not defined!
+{%- endif -%}
 }
 {%- endmacro -%}
