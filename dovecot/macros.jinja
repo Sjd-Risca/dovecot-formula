@@ -26,6 +26,7 @@ namespace {{ name }} {
   }
    {%- else -%}
   {{ key }} = {{ value }}
+   {%- endif -%}
 {%- endfor -%}
 }
 {%- endmacro -%}
