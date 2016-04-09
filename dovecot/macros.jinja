@@ -6,3 +6,11 @@
 {{ state }}{{ configname }} = {{ default_value }}
     {%- endif -%}
 {%- endmacro -%}
+
+{%- macro to_include(auth_service) -%}
+    {%- if cfg[auth_service]|default(False) -%}
+!include {{ auth_service }}.conf.ext
+    {%- else -%}
+#!include {{ auth_service }}.conf.ext
+    {%- endif -%}
+{%- endmacro -%}

@@ -32,8 +32,8 @@ dovecot_packages:
   file.recurse:
     - source: salt://dovecot/files/conf.d
     - user: root
-    - group: dovecot
-    - file_mode: 640
+    - group: root
+    - file_mode: 64r40
     - template: jinja
     - backup: minion
     - watch_in:

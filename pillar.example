@@ -1,4 +1,7 @@
 dovecot:
+  config:
+    disable_plaintext_auth: no   
+    auth-ldap: true
   lookup:
     enable_service_control: True
     config:
