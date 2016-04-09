@@ -20,17 +20,17 @@
 {%- set cfg_nm = cfg.get(key, {}) -%}
 namespace {{ name }} {
 {%- if cfg_nm.get(name, {}) is defined -%}
-{%- for key, value in cfg_nm[name].iteritems() -%}
-    {%- if value is mapping and value is iterable -%}
+{% for key, value in cfg_nm[name].iteritems() -%}
+    {% if value is mapping and value is iterable -%}
   {{ key }} {
-        {%- for subkey, subvalue in value -%}
+        {% for subkey, subvalue in value -%}
     {{ subkey }} = {{ subvalue }}
-        {%- endfor -%}
+        {% endfor -%}
   }
-   {%- else -%}
+   {% else -%}
   {{ key }} = {{ value }}
-   {%- endif -%}
-{%- endfor -%}
+   {% endif -%}
+{% endfor -%}
 {%- else -%}
     #WARNING: variable not defined!
 {%- endif -%}
