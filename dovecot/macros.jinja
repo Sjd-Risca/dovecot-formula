@@ -8,9 +8,24 @@
 {%- endmacro -%}
 
 {%- macro to_include(auth_service) -%}
-    {%- if cfg[auth_service] is defined and cfg[auth_service] == true -%}
+    {%- if cfg[auth_service] is defined -%}
 !include {{ auth_service }}.conf.ext
     {%- else -%}
 #!include {{ auth_service }}.conf.ext
     {%- endif -%}
+{%- endmacro -%}
+
+{%- macro namespace(name) -%}
+namespace {{ name }} {
+{%- for key, value in cfg.name.iteritems() -%}
+    {%- if value is iterable -%}
+  {{ key }} {
+        {%- for subkey, subvalue in value -%}
+    {{ subkey }} = {{ subvalue }}
+        {%- endfor -%}
+  }
+   {%- else -%}
+  {{ key }} = {{ value }}
+{%- endfor -%}
+}
 {%- endmacro -%}
