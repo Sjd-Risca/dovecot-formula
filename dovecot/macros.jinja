@@ -16,9 +16,10 @@
 {%- endmacro -%}
 
 {%- macro namespace(name, key) -%}
+{%- set cfg_nm = cfg.get(key, {}) -%}
 namespace {{ name }} {
-{%- if cfg.get(key, []).get(name, []) -%}
-{%- for key, value in cfg[key][name].iteritems() -%}
+{%- if cfg_nm.get(name, {}) -%}
+{%- for key, value in cfg_nm[name].iteritems() -%}
     {%- if value is iterable -%}
   {{ key }} {
         {%- for subkey, subvalue in value -%}
