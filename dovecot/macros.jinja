@@ -17,7 +17,7 @@
 
 {%- macro namespace(name) -%}
 namespace {{ name }} {
-{%- for key, value in cfg.name.iteritems() -%}
+{%- for key, value in cfg.'namespace'.name.iteritems() -%}
     {%- if value is iterable -%}
   {{ key }} {
         {%- for subkey, subvalue in value -%}
