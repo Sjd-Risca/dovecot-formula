@@ -33,7 +33,7 @@ dovecot_packages:
     - source: salt://dovecot/files/conf.d
     - user: root
     - group: root
-    - file_mode: 64r40
+    - file_mode: 644
     - template: jinja
     - backup: minion
     - watch_in:

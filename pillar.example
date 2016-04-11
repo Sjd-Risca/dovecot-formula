@@ -81,10 +81,6 @@ dovecot:
         dict-sql: |
           # Managed by salt
           
-      conf: 
-        10-mail: |
-          mail_location = maildir:~/Maildir
-      
       confext:
         auth-deny: |
           passdb {
