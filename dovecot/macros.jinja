@@ -3,13 +3,15 @@
 {%- macro get_config(configname, default_value, state='#') -%}
     {%- if configname in cfg -%}
 {{ configname }} = {{ cfg[configname] }}
-    {%- else -%}
+    {%- elif default_value is defined -%}
 {{ state }}{{ configname }} = {{ default_value }}
+    {%- else -%}
+{{ state }}{{ configname }} =
     {%- endif -%}
 {%- endmacro -%}
 
-{%- macro to_include(auth_service) -%}
-    {%- if cfg[auth_service] is defined -%}
+{%- macro to_include(auth_service, default_include) -%}
+    {%- if cfg[auth_service] is defined or default_include-%}
 !include {{ auth_service }}.conf.ext
     {%- else -%}
 #!include {{ auth_service }}.conf.ext
