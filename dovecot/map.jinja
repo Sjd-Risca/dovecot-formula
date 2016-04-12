@@ -1,6 +1,7 @@
 {% set dovecot = salt['grains.filter_by']({
     'Debian': {
         'config': {
+	    'ext': ['ldap', 'sql'],
             'filename': 'local',
             'local': '# no customization',
             'dovecotext': {},
@@ -15,6 +16,7 @@
     },
     'Gentoo': {
         'config': {
+	    'ext': ['ldap', 'sql'],
             'filename': 'local',
             'local': '# no customization',
             'dovecotext': {},
@@ -29,6 +31,7 @@
     },
     'Arch': {
         'config': {
+	    'ext': ['ldap', 'sql'],
             'filename': 'dovecot',
             'local': '# no customization',
             'dovecotext': {},
@@ -44,6 +47,7 @@
     },
     'RedHat': {
         'config': {
+	    'ext': ['ldap', 'sql'],
             'filename': 'local',
             'local': '# no customization',
             'dovecotext': {},
