@@ -1,3 +1,9 @@
+## Do not edit!
+## File managed by saltstack!
+{% set cfg = salt['pillar.get']('dovecot:config', {}) -%}
+{#- Set some useful MACRO -#}
+{%- from "dovecot/macros.jinja" import get_config with context -%}
+
 # This file is commonly accessed via passdb {} or userdb {} section in
 # conf.d/auth-ldap.conf.ext
 
@@ -17,57 +23,57 @@
 #        by * none
 
 # Space separated list of LDAP hosts to use. host:port is allowed too.
-#hosts =
+{{ get_config('hosts') }}
 
 # LDAP URIs to use. You can use this instead of hosts list. Note that this
 # setting isn't supported by all LDAP libraries.
-#uris = 
+{{ get_config('uris') }}
 
 # Distinguished Name - the username used to login to the LDAP server.
 # Leave it commented out to bind anonymously (useful with auth_bind=yes).
-#dn = 
+{{ get_config('dn') }}
 
 # Password for LDAP server, if dn is specified.
-#dnpass = 
+{{ get_config('dnpass') }}
 
 # Use SASL binding instead of the simple binding. Note that this changes
 # ldap_version automatically to be 3 if it's lower. Also note that SASL binds
 # and auth_bind=yes don't work together.
-#sasl_bind = no
+{{ get_config('sasl_bind', 'no') }}
 # SASL mechanism name to use.
-#sasl_mech =
+{{ get_config('sasl_mech') }}
 # SASL realm to use.
-#sasl_realm =
+{{ get_config('sasl_realm') }}
 # SASL authorization ID, ie. the dnpass is for this "master user", but the
 # dn is still the logged in user. Normally you want to keep this empty.
-#sasl_authz_id =
+{{ get_config('sasl_authz_id') }}
 
 # Use TLS to connect to the LDAP server.
-#tls = no
+{{ get_config('tls', 'no') }}
 # TLS options, currently supported only with OpenLDAP:
-#tls_ca_cert_file =
-#tls_ca_cert_dir =
-#tls_cipher_suite =
+{{ get_config('tls_ca_cert_file') }}
+{{ get_config('tls_ca_cert_dir') }}
+{{ get_config('tls_cipher_suite') }}
 # TLS cert/key is used only if LDAP server requires a client certificate.
-#tls_cert_file =
-#tls_key_file =
+{{ get_config('tls_cert_file') }}
+{{ get_config('tls_key_file') }}
 # Valid values: never, hard, demand, allow, try
-#tls_require_cert =
+{{ get_config('tls_require_cert') }}
 
 # Use the given ldaprc path.
-#ldaprc_path =
+{{ get_config('ldaprc_path') }}
 
 # LDAP library debug level as specified by LDAP_DEBUG_* in ldap_log.h.
 # -1 = everything. You may need to recompile OpenLDAP with debugging enabled
 # to get enough output.
-#debug_level = 0
+{{ get_config('debug_level', '0') }}
 
 # Use authentication binding for verifying password's validity. This works by
 # logging into LDAP server using the username and password given by client.
 # The pass_filter is used to find the DN for the user. Note that the pass_attrs
 # is still used, only the password field is ignored in it. Before doing any
 # search, the binding is switched back to the default DN.
-#auth_bind = no
+{{ get_config('auth_bind', 'no') }}
 
 # If authentication binding is used, you can save one LDAP request per login
 # if users' DN can be specified with a common template. The template can use
@@ -83,20 +89,20 @@
 # For example:
 #   auth_bind_userdn = cn=%u,ou=people,o=org
 #
-#auth_bind_userdn =
+{{ get_config('auth_bind_userdn') }}
 
 # LDAP protocol version to use. Likely 2 or 3.
-#ldap_version = 3
+{{ get_config('ldap_version', '3') }}
 
 # LDAP base. %variables can be used here.
 # For example: dc=mail, dc=example, dc=org
-base =
+{{ get_config('base', state='') }}
 
 # Dereference: never, searching, finding, always
-#deref = never
+{{ get_config('deref', 'never') }}
 
 # Search scope: base, onelevel, subtree
-#scope = subtree
+{{ get_config('scope', 'subtree') }}
 
 # User attributes are given in LDAP-name=dovecot-internal-name list. The
 # internal names are:
@@ -107,14 +113,14 @@ base =
 #
 # There are also other special fields which can be returned, see
 # http://wiki2.dovecot.org/UserDatabase/ExtraFields
-#user_attrs = homeDirectory=home,uidNumber=uid,gidNumber=gid
+{{ get_config('user_attrs', 'homeDirectory=home,uidNumber=uid,gidNumber=gid') }}
 
 # Filter for user lookup. Some variables can be used (see
 # http://wiki2.dovecot.org/Variables for full list):
 #   %u - username
 #   %n - user part in user@domain, same as %u if there's no domain
 #   %d - domain part in user@domain, empty if user there's no domain
-#user_filter = (&(objectClass=posixAccount)(uid=%u))
+{{ get_config('user_filter', '(&(objectClass=posixAccount)(uid=%u))') }}
 
 # Password checking attributes:
 #  user: Virtual user name (user@domain), if you wish to change the
@@ -122,22 +128,22 @@ base =
 #  password: Password, may optionally start with {type}, eg. {crypt}
 # There are also other special fields which can be returned, see
 # http://wiki2.dovecot.org/PasswordDatabase/ExtraFields
-#pass_attrs = uid=user,userPassword=password
+{{ get_config('pass_attrs', 'uid=user,userPassword=password') }}
 
 # If you wish to avoid two LDAP lookups (passdb + userdb), you can use
 # userdb prefetch instead of userdb ldap in dovecot.conf. In that case you'll
 # also have to include user_attrs in pass_attrs field prefixed with "userdb_"
 # string. For example:
-#pass_attrs = uid=user,userPassword=password,\
+{{ get_config('pass_attrs', 'uid=user,userPassword=password,\') }}
 #  homeDirectory=userdb_home,uidNumber=userdb_uid,gidNumber=userdb_gid
 
 # Filter for password lookups
-#pass_filter = (&(objectClass=posixAccount)(uid=%u))
+{{ get_config('pass_filter', '(&(objectClass=posixAccount)(uid=%u))') }}
 
 # Attributes and filter to get a list of all users
-#iterate_attrs = uid=user
-#iterate_filter = (objectClass=posixAccount)
+{{ get_config('iterate_attrs', 'uid=user') }}
+{{ get_config('iterate_filter', '(objectClass=posixAccount)') }}
 
 # Default password scheme. "{scheme}" before password overrides this.
 # List of supported schemes is in: http://wiki2.dovecot.org/Authentication
-#default_pass_scheme = CRYPT
+{{ get_config('default_pass_scheme', 'CRYPT') }}

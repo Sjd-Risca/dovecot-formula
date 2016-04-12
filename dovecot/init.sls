@@ -16,12 +16,15 @@ dovecot_packages:
     - require:
       - pkg: dovecot_packages
 
-{% for name, content in dovecot.config.dovecotext.items() %}
+{% for name in dovecot.config.ext %}
 /etc/dovecot/dovecot-{{ name }}.conf.ext:
   file.managed:
-    - contents: |
-        {{ content | indent(8) }}
+    - source: salt://dovecot/files/dovecot-{{ name }}.conf.ext
     - backup: minion
+    - user: root
+    - group: root
+    - mode: 600
+    - template: jinja
     - watch_in:
       - service: dovecot_service
     - require:

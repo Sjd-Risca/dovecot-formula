@@ -2,7 +2,13 @@ dovecot:
   config:
     disable_plaintext_auth: no   
     auth-ldap: true
+    ext:
+      ldap:
+        hosts: localhost
   lookup:
+    packages:
+      - dovecot-core    # default
+      - dovecot-imapd   # default
     enable_service_control: True
     config:
       local: |
@@ -69,18 +75,6 @@ dovecot:
         ssl_cert = </etc/ssl/private/dovecot-one.crt
         ssl_key = </etc/ssl/private/dovecot-one.key
     
-      dovecotext:
-        ldap: |
-          hosts = 0.0.0.0
-          base = dc=example, dc=com
-          scope = subtree
-          pass_attrs = uid=user,userPassword=password,\
-          homeDirectory=userdb_home,uidNumber=userdb_uid,gidNumber=userdb_gid
-          pass_filter = (&(objectClass=posixAccount)(uid=%u))
-          default_pass_scheme = SSHA
-        dict-sql: |
-          # Managed by salt
-          
       confext:
         auth-deny: |
           passdb {
