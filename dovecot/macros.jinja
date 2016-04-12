@@ -12,7 +12,7 @@
 
 {%- macro to_include(auth_service, default_include=false ) -%}
 {%- set toinclude = cfg[auth_service]|default(default_include) -%}
-{%-     if toinclude is true -%}
+{%-     if toinclude -%}
 !include {{ auth_service }}.conf.ext
 {%-     else -%}
 #!include {{ auth_service }}.conf.ext
