@@ -1,6 +1,6 @@
 dovecot:
   config:
-    conf: {}
+    conf: '{}'
     ext:
       - ldap
       - sql
