@@ -1,5 +1,9 @@
 dovecot:
   config:
+    conf: {}
+    ext:
+      - ldap
+      - sql
     auth_realms: '#this is a test'
     service:
       imap-login:

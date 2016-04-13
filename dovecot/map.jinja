@@ -4,12 +4,10 @@
 {% set os_family_map = salt['grains.filter_by']({
     'Debian': {
         'config': {
-            'ext': ['ldap', 'sql'],
             'filename': 'local',
             'local': '# no customization',
             'dovecotext': {},
             'confext': {},
-            'conf': {},
             'ssl_certs': {},
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/ssl/private',
@@ -19,12 +17,10 @@
     },
     'Gentoo': {
         'config': {
-            'ext': ['ldap', 'sql'],
             'filename': 'local',
             'local': '# no customization',
             'dovecotext': {},
             'confext': {},
-            'conf': {},
             'ssl_certs': {},
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/ssl/private',
@@ -34,12 +30,10 @@
     },
     'Arch': {
         'config': {
-            'ext': ['ldap', 'sql'],
             'filename': 'dovecot',
             'local': '# no customization',
             'dovecotext': {},
             'confext': {},
-            'conf': {},
             'ssl_certs': {},            
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/ssl/private',
@@ -49,12 +43,10 @@
     },
     'RedHat': {
         'config': {
-            'ext': ['ldap', 'sql'],
             'filename': 'local',
             'local': '# no customization',
             'dovecotext': {},
             'confext': {},
-            'conf': {},
             'ssl_certs': {},
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/pki/dovecot/certs',
