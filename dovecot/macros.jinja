@@ -64,8 +64,8 @@ service {{ srv }} {
 }
 {%- endmacro -%}
 
-{%- macro service -%}
-{% for srv in cfg %}
+{%- macro service() -%}
+{% for srv in cfg['service']|default({}) %}
 {{ set_service(srv) }}
 {% endfor %}
 {%- endmacro -%}
