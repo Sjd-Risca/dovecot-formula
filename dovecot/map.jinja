@@ -54,7 +54,7 @@
          },
          'packages': ['dovecot','dovecot-pigeonhole'],
     },
-}, merge=salt['pillar.get']('dovecot:lookup')) %}
+}, default='Debian', merge=default_settings.dovecot) %}
 
 {## Merge the flavor_map to the default settings ##}
 {% do default_settings.dovecot.update(os_family_map) %}
