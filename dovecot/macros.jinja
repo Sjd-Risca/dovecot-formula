@@ -57,7 +57,7 @@ service {{ srv }} {
 {%-   elif cfg_srv[key] is mapping %}
     {{ cfg_srv[key][comment]|default('#missing comment') }}
     {{ key }}: {{ cfg_srv[key][value]|default('missing value') }}
-{%-   else }
+{%-   else %}
     {{ key }}
 {%    endif -%}
 {% endfor -%}
