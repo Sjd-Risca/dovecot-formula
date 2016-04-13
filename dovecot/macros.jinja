@@ -40,3 +40,32 @@ namespace {{ name }} {
 {%- endif -%}
 }
 {%- endmacro -%}
+
+{%- macro set_service(srv) -%}
+{%- set cfg_srv = cfg.'service'.get(srv, {}) -%}
+service {{ srv }} {
+{% if cfg_srv.'intro'|default(false) %}  {{ cfg_srv.'intro' }}{% endif %}
+{% for key in cfg_srv if not key == 'intro' -%}
+{%     if cfg_srv[key] is string or cfg_srv[key] is number %}
+    {{ key }} = {{ value }}
+{%     elif cfg_srv[key] is not mapping and cfg_srv[key] is iterable %}
+    {{ key }} {
+{%-        for subkey, subvalue in cfg_srv[key].iteritems() %}
+        {{ subkey }} = {{ subvalue }}
+{%-        endfor %}
+    }
+{%-   elif cfg_srv[key] is mapping %}
+    {{ cfg_srv[key][comment]|default('#missing comment') }}
+    {{ key }}: {{ cfg_srv[key][value]|default('missing value') }}
+{%-   else }
+    {{ key }}
+{%    endif -%}
+{% endfor -%}
+}
+{%- endmacro -%}
+
+{%- macro service -%}
+{% for srv in cfg %}
+{{ set_service(srv) }}
+{% endfor %}
+{%- endmacro -%}
