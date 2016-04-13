@@ -1,5 +1,4 @@
-{# set cfg = salt['pillar.get']('dovecot:config', {}) -#}
-{% set cfg = {} -%}
+{% set cfg = salt['pillar.get']('dovecot:config', {}) -%}
 
 {%- macro get_config(configname, default_value, state='#') -%}
     {%- if configname in cfg -%}
