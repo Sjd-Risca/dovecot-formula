@@ -42,6 +42,7 @@ namespace {{ name }} {
 {%- endmacro -%}
 
 {%- macro set_service(srv) -%}
+{{ cfg }}
 {%- set cfg_srv = cfg['service'].get(srv, {}) -%}
 service {{ srv }} {
 {% if cfg_srv['intro']|default(false) %}  {{ cfg_srv['intro'] }}{% endif %}

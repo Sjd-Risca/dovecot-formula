@@ -12,7 +12,7 @@
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/ssl/private',
             'ssl_keys_dir': '/etc/ssl/private',
-           },
+        },
         'packages': ['dovecot-core','dovecot-imapd'],
     },
     'Gentoo': {
@@ -25,7 +25,7 @@
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/ssl/private',
             'ssl_keys_dir': '/etc/ssl/private',
-           },
+        },
         'packages': ['net-mail/dovecot'],
     },
     'Arch': {
@@ -33,12 +33,12 @@
             'filename': 'dovecot',
             'local': '# no customization',
             'dovecotext': {},
-            'confext': {},
-            'ssl_certs': {},            
+	    'confext': {},
+	    'ssl_certs': {},            
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/ssl/private',
             'ssl_keys_dir': '/etc/ssl/private',
-            },
+        },
         'packages': ['dovecot'],
     },
     'RedHat': {
@@ -51,7 +51,7 @@
             'ssl_keys': {},
             'ssl_certs_dir': '/etc/pki/dovecot/certs',
             'ssl_keys_dir': '/etc/pki/dovecot/private',
-            },
+         },
          'packages': ['dovecot','dovecot-pigeonhole'],
     },
 }, merge=salt['pillar.get']('dovecot:lookup')) %}
