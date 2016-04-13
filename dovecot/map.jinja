@@ -1,4 +1,7 @@
-{% set dovecot = salt['grains.filter_by']({
+{## Start with  defaults from defaults.yaml ##}
+{% import_yaml "dovecot/defaults.yaml" as default_settings %}
+
+{% set os_family_map = salt['grains.filter_by']({
     'Debian': {
         'config': {
 	    'ext': ['ldap', 'sql'],
@@ -61,3 +64,13 @@
          'packages': ['dovecot','dovecot-pigeonhole'],
     },
 }, merge=salt['pillar.get']('dovecot:lookup')) %}
+
+{## Merge the flavor_map to the default settings ##}
+{% do default_settings.dovecot.update(os_family_map) %}
+
+{## Merge in salt:lookup pillar ##}
+{% set dovecot_settings = salt['pillar.get'](
+   'dovecot',
+    default=default_settings.dovecot,
+    merge=True) 
+%}
