@@ -1,4 +1,5 @@
-{% from 'dovecot/map.jinja' import dovecot_settings with context %}
+{#% from 'dovecot/map.jinja' import dovecot_settings with context %#}
+{% include 'dovecot/map.jinja' with context %}
 {% set cfg = dovecot_settings['config'] %}
 
 {%- macro get_config(configname, default_value, state='#') -%}
@@ -66,7 +67,7 @@ service {{ srv }} {
 
 {%- macro service() -%}
 {{ cfg }}
-{{ dovecot_settings|yaml }}
+{{ dovecot_settings }}
 {% for srv in cfg['service']|default({}) %}
 #{{ srv }}
 {{ set_service(srv) }}
