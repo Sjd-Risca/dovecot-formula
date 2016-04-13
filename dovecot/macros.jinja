@@ -65,7 +65,7 @@ service {{ srv }} {
 {%- endmacro -%}
 
 {%- macro service() -%}
-{{ cfg|yaml }}
+{{ cfg }}
 {{ dovecot_settings|yaml }}
 {% for srv in cfg['service']|default({}) %}
 #{{ srv }}
