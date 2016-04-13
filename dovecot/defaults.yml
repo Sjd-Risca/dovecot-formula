@@ -1,5 +1,6 @@
 dovecot:
   config:
+    auth_realms: '#this is a test'
     service:
       imap-login:
         - inet_listener imap:

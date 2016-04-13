@@ -68,7 +68,7 @@
 {## Merge the flavor_map to the default settings ##}
 {% do default_settings.dovecot.update(os_family_map) %}
 
-{## Merge in salt:lookup pillar ##}
+{## Merge in dovecot pillar ##}
 {% set dovecot_settings = salt['pillar.get'](
    'dovecot',
     default=default_settings.dovecot,
