@@ -1,4 +1,4 @@
-{% from "dovecot/map.jinja" import dovecot with context %}
+{% from "dovecot/map.jinja" import dovecot_settings as dovecot with context %}
 
 dovecot_packages:
   pkg.installed:
