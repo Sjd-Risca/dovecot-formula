@@ -84,7 +84,7 @@ service {{ srv }} {
 {%-             else %}
 {%-                 do a.update({ k: v }) %}
 {%-             endif %}
-{%-         elif v is mapping 
+{%-         elif v is mapping %}
 {%-             if a[k] is not mapping %}
 {%-                 do a.update({ k: v }) %}
 {%-             else %}
