@@ -75,7 +75,7 @@ service {{ srv }} {
 
 
 {%- macro deep_merge(a, b) %}
-{%-     for k,v in b.iteritems(): %}
+{%-     for k,v in b.iteritems() %}
 {%-         if v is string or if v is number %}
 {%-             do a.update({ k: v }) %}
 {%-         elif v is not mapping %}
