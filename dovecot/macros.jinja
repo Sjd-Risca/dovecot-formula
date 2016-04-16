@@ -51,7 +51,7 @@ service {{ srv }} {
 {%     elif cfg_srv[key] is not mapping and cfg_srv[key] is iterable %}
     {{ key }} {
 {%-     for opt in cfg_srv[key] %}
-{%-        for subkey, subvalue in cfg_srv[key].iteritems() %}
+{%-        for subkey, subvalue in opt.iteritems() %}
         {{ subkey }} = {{ subvalue }}
 {%-        endfor %}
 {%-     endfor %}
