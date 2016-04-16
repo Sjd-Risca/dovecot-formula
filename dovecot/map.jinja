@@ -9,13 +9,13 @@
 {%-             if a[k] is not defined %}
 {%-                 do a.update({ k: v }) %}
 {%-             elif a[k] is iterable and a[k] is not mapping and a[k] is not string %}
-{%-                 do a.update({ k: v + a[k]}) %}
+{%-                 do a.update({ k: v|list + a[k]|list}) %}
 {%-             else %}
 {%-                 do a.update({ k: v }) %}
 {%-             endif %}
 {%-         elif v is mapping %}
 {%-             if a[k] is not defined %}
-{%-                 do deep_merge(a[k], v) %}
+{%-                 do a.update({ k: v }) %}
 {%-             elif a[k] is not mapping %}
 {%-                 do a.update({ k: v }) %}
 {%-             else %}
