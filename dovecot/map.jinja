@@ -1,4 +1,5 @@
 {## Start with  defaults from defaults.yaml ##}
+{% from 'dovecot/macro.jinja' import deep_merge %}
 {% import_yaml "dovecot/defaults.yml" as default_settings %}
 
 {% set os_family_map = salt['grains.filter_by']({
@@ -54,10 +55,11 @@
          },
          'packages': ['dovecot','dovecot-pigeonhole'],
     },
-}, default='Debian', merge=default_settings.dovecot) %}
+}, default='Debian', merge=salt['pillar.get']('dovecot:lookup')) %}
 
 {## Merge the flavor_map to the default settings ##}
-{% do default_settings.dovecot.update(os_family_map) %}
+{#% do default_settings.dovecot.update(os_family_map) %#}
+{% do deep_merge(default_settings.dovecot, os_family_map) %}
 
 {## Merge in dovecot pillar ##}
 {% set dovecot_settings = salt['pillar.get'](
