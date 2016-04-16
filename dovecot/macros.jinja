@@ -41,34 +41,31 @@ namespace {{ name }} {
 }
 {%- endmacro -%}
 
+
 {%- macro set_service(srv) -%}
 {%- set cfg_srv = cfg['service'].get(srv, {}) -%}
 service {{ srv }} {
 {% if cfg_srv['intro']|default(false) %}  {{ cfg_srv['intro'] }}{% endif %}
-{% for key in cfg_srv if not key == 'intro' -%}
-{%     if cfg_srv[key] is string or cfg_srv[key] is number %}
-    {{ key }} = {{ value }}
-{%     elif cfg_srv[key] is not mapping and cfg_srv[key] is iterable %}
-    {{ key }} {
-{%-     for opt in cfg_srv[key] %}
-{%-        for subkey, subvalue in opt.iteritems() %}
-        {{ subkey }} = {{ subvalue }}
-{%-        endfor %}
-{%-     endfor %}
-    }
-{%-   elif cfg_srv[key] is mapping %}
-    {{ cfg_srv[key]['comment']|default('#missing comment') }}
-    {{ key }}: {{ cfg_srv[key]['value']|default('missing value') }}
-{%-   else %}
+{%- for key in cfg_srv if not key == 'intro' -%}
+{%-     if key[-2] == ' {' %}
     {{ key }}
-{%    endif -%}
-{% endfor -%}
+{%-         for opt in key %}
+{%-             for subkey, subvalue in opt.iteritems() %}
+        {{ subkey }} = {{ subv }}
+{%-             endfor %}
+{%-         endfor %}
+    }
+{%-      elif cfg_srv[key] is string or cfg_srv[key] is number %}
+    {{ key }} = {{ value }}
+{%-      else %}
+    {{ cfg_srv[key]['comment']|default('') }}
+    {{ key }} = {{ cfg_srv[key]['value']|default('missing value') }}
+{%-      endif %}
+{%- endfor %}
 }
 {%- endmacro -%}
 
 {%- macro service() -%}
-{{ cfg }}
-{{ dovecot_settings }}
 {% for srv in cfg['service']|default({}) %}
 #{{ srv }}
 {{ set_service(srv) }}
