@@ -80,7 +80,7 @@ service {{ srv }} {
 {%-             do a.update({ k: v }) %}
 {%-         elif v is not mapping %}
 {%-             if a[k] is iterable and a[k] is not mapping and a[k] is not string %}
-{%-                 do a.update({ k: v + a[k]) %}
+{%-                 do a.update({ k: v + a[k]}) %}
 {%-             else %}
 {%-                 do a.update({ k: v }) %}
 {%-             endif %}
