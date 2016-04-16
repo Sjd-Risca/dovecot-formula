@@ -1,5 +1,5 @@
 {## Start with  defaults from defaults.yaml ##}
-{% from 'dovecot/macro.jinja' import deep_merge %}
+{% from 'dovecot/macros.jinja' import deep_merge %}
 {% import_yaml "dovecot/defaults.yml" as default_settings %}
 
 {% set os_family_map = salt['grains.filter_by']({
