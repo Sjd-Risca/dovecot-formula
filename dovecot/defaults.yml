@@ -11,7 +11,7 @@ dovecot:
           port: 143
         inet_listener imaps {:
           port: 993
-          ssl: yes
+          ssl: 'yes'
         service_count:
           state: '#'
           value: 1
@@ -32,7 +32,7 @@ dovecot:
           port: 110
         inet_listener pop3s {:
           port: 995
-          ssl: yes
+          ssl: 'yes'
       lmtp:
         unix_listener lmtp {:
           mode: 0666

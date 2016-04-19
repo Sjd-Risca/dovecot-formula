@@ -35,9 +35,9 @@ namespace {{ name }} {
     {{ key }} = {{ value }}
 {%    endif -%}
 {% endfor -%}
-{%- else -%}
+{%- else %}
     #WARNING: variable not defined!
-{%- endif -%}
+{%- endif %}
 }
 {%- endmacro -%}
 
