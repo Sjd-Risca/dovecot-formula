@@ -77,6 +77,6 @@ dovecot:
           user: ''
           group: ''
         user:
-          comment: Auth process is run as this user.
+          comment: '# Auth process is run as this user.'
           state: '#'
           value: $default_internal_user
