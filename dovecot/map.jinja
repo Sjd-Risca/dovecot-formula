@@ -58,7 +58,7 @@
 
 {## Merge the flavor_map to the default settings ##}
 {#% do default_settings.dovecot.update(os_family_map) %#}
-{% set default_settigns.dovecot = salt['my_helper.merge_recursive_adv'](default_settings.dovecot, os_family_map) %}
+{% set default_settigs.dovecot = salt['my_helper.merge_recursive_adv'](default_settings.dovecot, os_family_map) %}
 
 {## Merge in dovecot pillar ##}
 {% set dovecot_settings = salt['pillar.get'](
