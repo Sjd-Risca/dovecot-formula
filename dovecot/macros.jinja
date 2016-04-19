@@ -55,7 +55,7 @@ service {{ srv }} {
     {{ state }}{{ key }}
 {%-         if cfg_srv[key] is mapping and cfg_srv[key] is not string -%}
 {%-             for subkey, subv in cfg_srv[key].iteritems() %}
-{%-                 if not subkey == 'state' or not subkey == 'comment' %}
+{%-                 if not subkey == 'state' and not subkey == 'comment' %}
     {{ state }}    {{ subkey }} = {{ subv }}
 {%-                 endif %}
 {%-             endfor %}
