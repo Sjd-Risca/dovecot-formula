@@ -45,7 +45,7 @@ namespace {{ name }} {
 {%- macro set_service(srv) -%}
 {%- set cfg_srv = cfg['service'].get(srv, {}) -%}
 service {{ srv }} {
-{% if cfg_srv['intro']|default(false) %}  {{ cfg_srv['intro'] }}{% endif %}
+{% if cfg_srv['intro']|default(false) %}    {{ cfg_srv['intro']|indent(4) }}{% endif %}
 {%- for key in cfg_srv if not key == 'intro' -%}
 {%-     if key[-2:] == ' {' %}
     {{ key }}
@@ -60,7 +60,7 @@ service {{ srv }} {
 {%-      elif cfg_srv[key] is string or cfg_srv[key] is number %}
     {{ key }} = {{ value }}
 {%-      else %}
-    {{ cfg_srv[key]['comment']|default('') }}
+    {{ cfg_srv[key]['comment']|default('')|indent(4) }}
     {{ key }} = {{ cfg_srv[key]['value']|default('missing value') }}
 {%-      endif %}
 {%- endfor %}
