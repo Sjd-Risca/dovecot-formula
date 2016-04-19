@@ -49,9 +49,13 @@ service {{ srv }} {
 {%- for key in cfg_srv if not key == 'intro' -%}
 {%-     if key[-2:] == ' {' %}
     {{ key }}
-{%-         for subkey|default("#"), subvalue|default("") in cfg_srv[key].iteritems() %}
+{%-         if sfg_srv[key] is mapping and sfg_srv[key] is not string -%}
+{%-             for subkey, subvalue in cfg_srv[key].iteritems() %}
         {{ subkey }} = {{ subv }}
-{%-         endfor %}
+{%-             endfor %}
+{%-         else %}
+        {{ sfg_srv[key] }}
+{%-        endif %}
     }
 {%-      elif cfg_srv[key] is string or cfg_srv[key] is number %}
     {{ key }} = {{ value }}
