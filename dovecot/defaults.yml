@@ -13,14 +13,32 @@ dovecot:
           port: 993
           ssl: yes
         service_count:
+          state: '#'
           value: 1
           comment: |
               # Number of connections to handle before starting a new process. Typically
               # the only useful values are 0 (unlimited) or 1. 1 is more secure, but 0
               # is faster. <doc/wiki/LoginProcess.txt>
         process_min_avail:
+          state: '#'
           value: 0
           comment: '# Number of processes to always keep waiting for more connections.'
         vsz_limit:
+          state: '#'
           value: $default_vsz_limit
           comment: '# If you set service_count=0, you probably need to grow this.'
+      pop3-login:
+        inet_listener pop3 {:
+          port: 110
+        inet_listener pop3s {:
+          port: 995
+          ssl: yes
+      lmtp:
+        unix_listener lmtp {:
+          mode: 0666
+        inet_listener lmtp {:
+          state: '#'
+          comment: '# Create inet listener only if you can't use the above UNIX socket'
+          address: ''
+          port: ''
+

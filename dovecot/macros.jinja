@@ -48,24 +48,35 @@ service {{ srv }} {
 {% if cfg_srv['intro']|default(false) %}    {{ cfg_srv['intro']|indent(4) }}{% endif %}
 {%- for key in cfg_srv if not key == 'intro' -%}
 {%-     if key[-2:] == ' {' %}
-    {{ key }}
+{%- set state = cfg_srv[key]['state']|default('') %}
+{%-         if cfg_srv[key]['comment'] is defined %}
+    {{ cfg_srv[key]['comment'] }}
+{%-         endif %}
+    {{ state }}{{ key }}
 {%-         if cfg_srv[key] is mapping and cfg_srv[key] is not string -%}
 {%-             for subkey, subv in cfg_srv[key].iteritems() %}
-        {{ subkey }} = {{ subv }}
+{%-                 if not subkey == 'state' or not subkey == 'comment' %}
+    {{ state }}    {{ subkey }} = {{ subv }}
+{%-                 endif %}
 {%-             endfor %}
 {%-         else %}
-        {{ cfg_srv[key] }}
+    {{ state }}    {{ cfg_srv[key] }}
 {%-        endif %}
     }
+
 {%-      elif cfg_srv[key] is string or cfg_srv[key] is number %}
     {{ key }} = {{ value }}
+
 {%-      else %}
+{%- set state = cfg_srv[key]['state']|default('') %}
     {{ cfg_srv[key]['comment']|default('')|indent(4) }}
-    {{ key }} = {{ cfg_srv[key]['value']|default('missing value') }}
+    {{ state }}{{ key }} = {{ cfg_srv[key]['value']|default('missing value') }}
+
 {%-      endif %}
 {%- endfor %}
 }
 {%- endmacro -%}
+
 
 {%- macro service() -%}
 {% for srv in cfg['service']|default({}) %}
