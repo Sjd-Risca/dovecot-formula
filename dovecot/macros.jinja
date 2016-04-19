@@ -49,10 +49,8 @@ service {{ srv }} {
 {%- for key in cfg_srv if not key == 'intro' -%}
 {%-     if key[-2:] == ' {' %}
     {{ key }}
-{%-         for opt in key %}
-{%-             for subkey, subvalue in opt.iteritems() %}
+{%-         for subkey|default("#"), subvalue|default("") in cfg_srv[key].iteritems() %}
         {{ subkey }} = {{ subv }}
-{%-             endfor %}
 {%-         endfor %}
     }
 {%-      elif cfg_srv[key] is string or cfg_srv[key] is number %}
