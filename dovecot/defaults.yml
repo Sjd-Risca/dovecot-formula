@@ -38,7 +38,7 @@ dovecot:
           mode: 0666
         inet_listener lmtp {:
           state: '#'
-          comment: '# Create inet listener only if you can't use the above UNIX socket'
+          comment: "# Create inet listener only if you can't use the above UNIX socket"
           address: ''
           port: ''
 
