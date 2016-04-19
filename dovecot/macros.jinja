@@ -50,7 +50,7 @@ service {{ srv }} {
 {%-     if key[-2:] == ' {' %}
     {{ key }}
 {%-         if cfg_srv[key] is mapping and cfg_srv[key] is not string -%}
-{%-             for subkey, subvalue in cfg_srv[key].iteritems() %}
+{%-             for subkey, subv in cfg_srv[key].iteritems() %}
         {{ subkey }} = {{ subv }}
 {%-             endfor %}
 {%-         else %}
