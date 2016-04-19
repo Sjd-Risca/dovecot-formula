@@ -2,13 +2,13 @@
 {% set cfg = dovecot_settings['config'] %}
 
 {%- macro get_config(configname, default_value, state='#') -%}
-    {%- if configname in cfg -%}
+{%-     if configname in cfg -%}
 {{ configname }} = {{ cfg[configname] }}
-    {%- elif default_value is defined -%}
+{%-     elif default_value is defined -%}
 {{ state }}{{ configname }} = {{ default_value }}
-    {%- else -%}
+{%-     else -%}
 {{ state }}{{ configname }} =
-    {%- endif -%}
+{%-     endif -%}
 {%- endmacro -%}
 
 {%- macro to_include(auth_service, default_include=false ) -%}
@@ -47,7 +47,7 @@ namespace {{ name }} {
 service {{ srv }} {
 {% if cfg_srv['intro']|default(false) %}  {{ cfg_srv['intro'] }}{% endif %}
 {%- for key in cfg_srv if not key == 'intro' -%}
-{%-     if key[-2] == ' {' %}
+{%-     if key[-2:] == ' {' %}
     {{ key }}
 {%-         for opt in key %}
 {%-             for subkey, subvalue in opt.iteritems() %}
