@@ -62,7 +62,7 @@ service {{ srv }} {
 {%-         else %}
     {{ state }}    {{ cfg_srv[key] }}
 {%-        endif %}
-    }
+    {{ state }}}
 
 {%-      elif cfg_srv[key] is string or cfg_srv[key] is number %}
     {{ key }} = {{ value }}
