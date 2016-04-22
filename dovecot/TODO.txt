@@ -1,0 +1,3 @@
+file: dovecot-ldap.conf.ext
+By now there is still no references to macro.jinja. The main problem is that the macro require a custom pillar location.
+HP solution: wrap macro into another macro and reassign it on the jinja conf just after the import

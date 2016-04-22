@@ -1,8 +1,16 @@
 ## Do not edit!
 ## File managed by saltstack!
-{% set cfg = salt['pillar.get']('dovecot:config', {}) -%}
+{% set cfg = salt['pillar.get']('dovecot:config:ext:ldap', {}) -%}
 {#- Set some useful MACRO -#}
-{%- from "dovecot/macros.jinja" import get_config with context -%}
+{%- macro get_config(configname, default_value, state='#') -%}
+{%-     if configname in cfg -%}
+{{ configname }} = {{ cfg[configname] }}
+{%-     elif default_value is defined -%}
+{{ state }}{{ configname }} = {{ default_value }}
+{%-     else -%}
+{{ state }}{{ configname }} =
+{%-     endif -%}
+{%- endmacro -%}
 
 # This file is commonly accessed via passdb {} or userdb {} section in
 # conf.d/auth-ldap.conf.ext
