@@ -2,7 +2,7 @@
 {% set cfg = dovecot_settings['config'] %}
 
 {%- macro get_config(configname, default_value, state='#', parentpillar=false) -%}
-{%-     if parentpillar is false -%}
+{%-     if not parentpillar -%}
 {%-         set _cfg = cfg -%}
 {%-     else -%}
 {%-         set _cfg = cfg[parentpillar]|default({}) -%}
