@@ -1,9 +1,14 @@
 {% from 'dovecot/map.jinja' import dovecot_settings with context %}
 {% set cfg = dovecot_settings['config'] %}
 
-{%- macro get_config(configname, default_value, state='#') -%}
-{%-     if configname in cfg -%}
-{{ configname }} = {{ cfg[configname] }}
+{%- macro get_config(configname, default_value, state='#', parentpillar=false) -%}
+{%-     if parentpillar is false -%}
+{%-         set _cfg = cfg -%}
+{%-     else -%}
+{%-         set _cfg = cfg[parentpillar]|default({}) -%}
+{%-     endif -%}
+{%-     if configname in _cfg -%}
+{{ configname }} = {{ _cfg[configname] }}
 {%-     elif default_value is defined -%}
 {{ state }}{{ configname }} = {{ default_value }}
 {%-     else -%}
