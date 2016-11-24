@@ -48,12 +48,37 @@ namespace {{ name }} {
 
 
 {%- macro set_service(srv) -%}
+{# This macro configure a service stanza for dovecot configuration.
+
+Usage: set_service(ServiceName)
+
+  where ServiceName is the name of the service into the pillar, like:
+
+      config:
+        service:
+          ServiceName:
+            ...
+            ...
+
+Special syntax.
+  (ServiceName):
+    'intro': '#This text is set as introduction, please remember to put the # at beginning'
+    '(my stanza) {':            # this will initiate a substanza
+      'state': '#'              # do this for commenting all of the substanza
+      'comment': '(#here add your comment stanza)'
+      ('mykey'): ('mysubvalue')
+    '(mykey)': '(anditsvalue)'
+    '(myotherkey)':
+      ['state']: '#'          # prepone comment
+      'value': '(mykeyvalue)'
+      'coment': '(mykeycomment)'
+#}
 {%- set cfg_srv = cfg['service'].get(srv, {}) -%}
 service {{ srv }} {
 {%  if cfg_srv['intro']|default(false) %}    {{ cfg_srv['intro']|indent(4) }}{% endif %}
 {%- for key in cfg_srv if not key == 'intro' -%}
 {%-     if key[-2:] == ' {' %}
-{%-     set state = cfg_srv[key]['state']|default('') %}
+{%-         set state = cfg_srv[key]['state']|default('') %}
 {%-         if cfg_srv[key]['comment'] is defined %}
     {{ cfg_srv[key]['comment'] }}
 {%-         endif %}
@@ -66,14 +91,14 @@ service {{ srv }} {
 {%-             endfor %}
 {%-         else %}
     {{ state }}    {{ cfg_srv[key] }}
-{%-        endif %}
+{%-         endif %}
     {{ state }}}
 
 {%-     elif cfg_srv[key] is string or cfg_srv[key] is number %}
-    {{ key }} = {{ value }}
+    {{ key }} = {{ cfg_srv[key] }}
 
 {%-     else %}
-{%- set state = cfg_srv[key]['state']|default('') %}
+{%-         set state = cfg_srv[key]['state']|default('') %}
     {{ cfg_srv[key]['comment']|default('')|indent(4) }}
     {{ state }}{{ key }} = {{ cfg_srv[key]['value']|default('missing value') }}
 
@@ -84,9 +109,10 @@ service {{ srv }} {
 
 
 {%- macro service() -%}
-{% for srv in cfg['service']|default({}) %}
-#{{ srv }}
-{{ set_service(srv) }}
-{% endfor %}
+{# Macro for setting all available service #}
+{%   for srv in cfg['service']|default({}) %}
+#{{    srv }}
+{{     set_service(srv) }}
+{%    endfor %}
 {%- endmacro -%}
 
